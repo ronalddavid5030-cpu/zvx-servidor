@@ -9,12 +9,12 @@ app.get('/download', (req, res) => {
   const videoUrl = req.query.url;
   if (!videoUrl) return res.status(400).send('Falta la URL');
 
-  res.header('Content-Disposition', 'attachment; filename="zvx_musica.mp3"');
-  res.header('Content-Type', 'audio/mpeg');
+  // Descarga directa del mejor audio disponible en YouTube sin requerir FFmpeg
+  res.header('Content-Disposition', 'attachment; filename="zvx_audio.m4a"');
+  res.header('Content-Type', 'audio/mp4');
 
   exec(videoUrl, {
-    extractAudio: true,
-    audioFormat: 'mp3',
+    format: 'bestaudio',
     output: '-'
   }, { stdio: ['ignore', 'pipe', 'ignore'] }).pipe(res);
 });
